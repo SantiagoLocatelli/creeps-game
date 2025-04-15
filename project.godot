@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="First 2D game"
+config/name="Creeps Game"
 run/main_scene="uid://bw6ayjlu5ptb3"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
