@@ -3,10 +3,24 @@ signal hit
 
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
+var velocity := Vector2.ZERO
+var swipe_threshold := 5
+
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
+	
+func _physics_process(delta):
+	position += velocity * delta
+	
+func _unhandled_input(event):
+	if event is InputEventScreenDrag:
+		if event.relative.length() > swipe_threshold:
+			velocity = event.relative.normalized() * speed
+
+	elif event is InputEventScreenTouch and not event.pressed:
+		velocity = Vector2.ZERO
 
 func _process(delta):
 	var velocity = Vector2.ZERO # The player's movement vector.
