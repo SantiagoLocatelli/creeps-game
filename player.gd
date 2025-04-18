@@ -4,25 +4,42 @@ signal hit
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 var velocity := Vector2.ZERO
-var swipe_threshold := 5
+var swipe_threshold := 0
 
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	Input.set_use_accumulated_input(false)
 	hide()
 	
 func _physics_process(delta):
 	position += velocity * delta
+	var sprite_size = get_current_sprite_size($AnimatedSprite2D) * $AnimatedSprite2D.scale
+	var limits = get_movement_limits(screen_size, sprite_size)
+	position = position.clamp(limits["min"], limits["max"])
 	
 func _unhandled_input(event):
+	print("_unhandled_input")
+	print("event", event)
 	if event is InputEventScreenDrag:
+		print("InputEventScreenDrag")
 		if event.relative.length() > swipe_threshold:
 			velocity = event.relative.normalized() * speed
 
 	elif event is InputEventScreenTouch and not event.pressed:
 		velocity = Vector2.ZERO
+		
+	if velocity.x != 0:
+		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.flip_v = false
+		# See the note below about the following boolean assignment.
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+	elif velocity.y != 0:
+		$AnimatedSprite2D.animation = "up"
+		$AnimatedSprite2D.flip_v = velocity.y > 0
 
 func _process(delta):
+	
 	var velocity = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
@@ -43,7 +60,6 @@ func _process(delta):
 	var sprite_size = get_current_sprite_size($AnimatedSprite2D) * $AnimatedSprite2D.scale
 	var limits = get_movement_limits(screen_size, sprite_size)
 	position = position.clamp(limits["min"], limits["max"])
-
 
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
