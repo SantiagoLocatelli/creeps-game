@@ -1,7 +1,7 @@
 extends Area2D
 signal hit
 
-@export var speed = 400 # How fast the player will move (pixels/sec).
+@export var speed = 200 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 var velocity := Vector2.ZERO
 var swipe_threshold := 0
@@ -12,6 +12,14 @@ func _ready():
 	Input.set_use_accumulated_input(false)
 	hide()
 	
+	var config = ConfigFile.new()
+	var err = config.load("res://docs/config.cfg")
+	if err == OK:
+		speed = config.get_value("player", "speed", speed)
+		print("Velocidad cargada:", speed)
+	else:
+		print("No se pudo cargar config.cfg, usando valor por defecto.")
+	
 func _physics_process(delta):
 	position += velocity * delta
 	var sprite_size = get_current_sprite_size($AnimatedSprite2D) * $AnimatedSprite2D.scale
@@ -19,10 +27,7 @@ func _physics_process(delta):
 	position = position.clamp(limits["min"], limits["max"])
 	
 func _unhandled_input(event):
-	print("_unhandled_input")
-	print("event", event)
 	if event is InputEventScreenDrag:
-		print("InputEventScreenDrag")
 		if event.relative.length() > swipe_threshold:
 			velocity = event.relative.normalized() * speed
 

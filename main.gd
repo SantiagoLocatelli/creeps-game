@@ -5,6 +5,19 @@ var score
 var is_player_alive = true
 
 
+var min_speed = 200
+var max_speed = 300
+
+func _ready():
+	var config = ConfigFile.new()
+	var err = config.load("res://docs/config.cfg")
+	if err == OK:
+		min_speed = config.get_value("creeps", "min_speed", min_speed)
+		max_speed = config.get_value("creeps", "max_speed", max_speed)
+		print("Creep velocidad mínima:", min_speed, ", máxima:", max_speed)
+	else:
+		print("No se pudo cargar config.cfg, usando velocidades por defecto.")
+
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
@@ -42,7 +55,7 @@ func _on_mob_timer_timeout():
 	mob.rotation = direction
 
 	# Choose the velocity for the mob.
-	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+	var velocity = Vector2(randf_range(min_speed, max_speed), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
 
 	# Spawn the mob by adding it to the Main scene.
