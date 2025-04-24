@@ -7,6 +7,7 @@ var is_player_alive = true
 
 var min_speed = 200
 var max_speed = 300
+var noise_strength = 0.5
 
 func _ready():
 	var config = ConfigFile.new()
@@ -14,7 +15,9 @@ func _ready():
 	if err == OK:
 		min_speed = config.get_value("creeps", "min_speed", min_speed)
 		max_speed = config.get_value("creeps", "max_speed", max_speed)
-		print("Creep velocidad mínima:", min_speed, ", máxima:", max_speed)
+		noise_strength = config.get_value("creeps", "noise_strength", noise_strength)
+		print("Creep velocidad mínima:", min_speed, ", máxima:", max_speed, ", ruido:", noise_strength)
+
 	else:
 		print("No se pudo cargar config.cfg, usando velocidades por defecto.")
 
@@ -46,17 +49,17 @@ func _on_mob_timer_timeout():
 
 	# Set the mob's position to the random location.
 	mob.position = mob_spawn_location.position
+	
+	var player_pos = $Player.global_position
+	var to_player = (player_pos - mob.position).normalized()
+	var random_angle = randf_range(-noise_strength, noise_strength)
+	var noisy_direction = to_player.rotated(random_angle)
 
-	# Set the mob's direction perpendicular to the path direction.
-	var direction = mob_spawn_location.rotation + PI / 2
-
-	# Add some randomness to the direction.
-	direction += randf_range(-PI / 4, PI / 4)
-	mob.rotation = direction
-
-	# Choose the velocity for the mob.
-	var velocity = Vector2(randf_range(min_speed, max_speed), 0.0)
-	mob.linear_velocity = velocity.rotated(direction)
+	mob.rotation = noisy_direction.angle()
+	
+	# Velocidad aleatoria dentro del rango
+	var speed = randf_range(min_speed, max_speed)
+	mob.linear_velocity = noisy_direction * speed
 
 	# Spawn the mob by adding it to the Main scene.
 	add_child(mob)
