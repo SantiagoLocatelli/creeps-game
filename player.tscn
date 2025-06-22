@@ -1,19 +1,40 @@
-[gd_scene load_steps=8 format=3 uid="uid://mumkfw7ws2lh"]
+[gd_scene load_steps=12 format=3 uid="uid://mumkfw7ws2lh"]
 
 [ext_resource type="Texture2D" uid="uid://bxyjua44aveoq" path="res://art/playerGrey_up1.png" id="1_hqtel"]
 [ext_resource type="Script" uid="uid://dre2g8ubvaptb" path="res://player.gd" id="1_sweqy"]
+[ext_resource type="Texture2D" uid="uid://5niaghvx25pr" path="res://art/playerGrey_down1.png" id="2_b26j0"]
 [ext_resource type="Texture2D" uid="uid://b0f7t7yo5bfmx" path="res://art/playerGrey_up2.png" id="2_sweqy"]
 [ext_resource type="Texture2D" uid="uid://cekjpcsj4ofpi" path="res://art/playerGrey_walk1.png" id="3_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://c0b4re3714kxf" path="res://art/playerGrey_down2.png" id="3_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://cglcrweuewfqc" path="res://art/playerGrey_walk2.png" id="4_1jxqw"]
+[ext_resource type="Texture2D" uid="uid://i2bdie0ljpbg" path="res://art/playerGrey_up3.png" id="4_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://cai6pnh7iytsy" path="res://art/playerGrey_down3.png" id="4_nvl01"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dw050"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b26j0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_n7ghd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nvl01")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_hqtel")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_sweqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2hs0m")
 }],
 "loop": true,
 "name": &"up",
@@ -40,9 +61,9 @@ script = ExtResource("1_sweqy")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.063, 0.063)
 sprite_frames = SubResource("SpriteFrames_dw050")
-animation = &"walk"
+animation = &"down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_b26j0")
