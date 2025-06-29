@@ -34,10 +34,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_cixyi")
+"texture": ExtResource("6_7ulmv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_7ulmv")
+"texture": ExtResource("5_cixyi")
 }],
 "loop": true,
 "name": &"walking",
@@ -55,10 +55,9 @@ script = ExtResource("1_1qmh0")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.063, 0.063)
 sprite_frames = SubResource("SpriteFrames_pcqmr")
 animation = &"walking"
-frame = 1
 frame_progress = 0.192223
 metadata/_edit_group_ = true
 
