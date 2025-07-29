@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cu8g0yxsxt2po" path="res://art/enemyFlyingAlt_2.png" id="2_1qmh0"]
 [ext_resource type="Texture2D" uid="uid://d1nvjd2lrg6pd" path="res://art/enemySwimming_1.png" id="3_gfurk"]
 [ext_resource type="Texture2D" uid="uid://b5f3y6ol63lg7" path="res://art/enemySwimming_2.png" id="4_ieysi"]
-[ext_resource type="Texture2D" uid="uid://cdxukuasuibw2" path="res://art/enemyWalking_1.png" id="5_cixyi"]
 [ext_resource type="Texture2D" uid="uid://lssis57sj46q" path="res://art/enemyWalking_2.png" id="6_7ulmv"]
+[ext_resource type="Texture2D" uid="uid://bk6sl1c16h57i" path="res://art/enemyWalking_3.png" id="8_gfurk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pcqmr"]
 animations = [{
@@ -37,7 +37,7 @@ animations = [{
 "texture": ExtResource("6_7ulmv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_cixyi")
+"texture": ExtResource("8_gfurk")
 }],
 "loop": true,
 "name": &"walking",
@@ -45,8 +45,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jbnni"]
-radius = 36.0
-height = 98.0
+radius = 26.0
+height = 56.0
 
 [node name="Mob" type="RigidBody2D" groups=["mobs"]]
 collision_mask = 0
@@ -55,14 +55,15 @@ script = ExtResource("1_1qmh0")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.063, 0.063)
+scale = Vector2(0.0526698, 0.065494)
 sprite_frames = SubResource("SpriteFrames_pcqmr")
-animation = &"walking"
-frame_progress = 0.192223
+animation = &"flying"
+frame_progress = 0.563951
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
+scale = Vector2(0.914981, 1.10609)
 shape = SubResource("CapsuleShape2D_jbnni")
 metadata/_edit_group_ = true
 
